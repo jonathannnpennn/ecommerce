@@ -1,1126 +1,359 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <!-- =========================
+       META PIXEL
+  ========================== -->
+  <script>
+  !function(f,b,e,v,n,t,s) {
+    if (f.fbq) return;
+    n = f.fbq = function() {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n; n.loaded = true; n.version = "2.0"; n.queue = [];
+    t = b.createElement(e); t.async = true; t.src = v;
+    s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+  }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+
+  fbq("init", "DASCJ93C77U5PB60BNTG", {
+    em: 'dGVzdEBnbWFpbC5jb20=',
+    ph: '2b1c2d3e4f5g6h7i8j9k0l='
+  });
+  fbq("track", "PageView");
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=DASCJ93C77U5PB60BNTG&ev=PageView&noscript=1" alt="" />
+  </noscript>
+
+  <!-- =========================
+       TIKTOK PIXEL
+  ========================== -->
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+    ttq.load('DASCJ93C77U5PB60BNTG');
+    ttq.identify({
+      email: 'dGVzdEBnbWFpbC5jb20=',
+      phone_number: '2b1c2d3e4f5g6h7i8j9k0l='
+    });
+    ttq.page();
+  }(window, document, 'ttq');
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#080808" />
-
   <title>Verifikasi Keamanan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --black: #080808;
-      --black-soft: #111111;
-      --panel: rgba(22, 22, 22, .88);
-      --gold: #d9a441;
-      --gold-light: #ffe08a;
-      --gold-dark: #9b6a13;
-      --white: #fffaf0;
-      --muted: #b7b0a1;
-      --line: rgba(217, 164, 65, .28);
+      --bg: #08080a;
+      --card: rgba(18, 12, 14, 0.72);
+      --red: #e11d2e;
+      --red-light: #ff4655;
+      --red-dark: #7a0a14;
+      --white: #ffffff;
+      --muted: #9a9a9f;
+      --line: rgba(225, 29, 46, 0.28);
+      --green: #2fd08a;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
-      min-height: 100dvh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 24px;
-      overflow-x: hidden;
-      overflow-y: auto;
-      color: var(--white);
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at 50% -10%, rgba(217, 164, 65, .16), transparent 34%),
-        radial-gradient(circle at 0% 100%, rgba(217, 164, 65, .10), transparent 30%),
-        var(--black);
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      opacity: .08;
-      pointer-events: none;
+      align-items: center;
+      padding: 20px;
+      background-color: var(--bg);
       background-image:
-        linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: linear-gradient(to bottom, black, transparent 90%);
-    }
-
-    .orb {
-      position: fixed;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      pointer-events: none;
-      filter: blur(50px);
-      opacity: .15;
-      background: var(--gold);
-      animation: floatOrb 8s ease-in-out infinite;
-    }
-
-    .orb-one {
-      top: -150px;
-      right: -80px;
-    }
-
-    .orb-two {
-      bottom: -160px;
-      left: -100px;
-      animation-delay: -3s;
+        radial-gradient(circle at 20% 20%, rgba(225, 29, 46, 0.14), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(225, 29, 46, 0.10), transparent 45%);
+      font-family: 'Inter', sans-serif;
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     .card {
       position: relative;
-      width: min(100%, 530px);
-      padding: 46px 34px 34px;
-      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      padding: 42px 28px 32px;
+      border-radius: 22px;
+      background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 28px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.055), transparent 35%),
-        var(--panel);
       box-shadow:
-        0 25px 90px rgba(0, 0, 0, .7),
-        0 0 60px rgba(217, 164, 65, .08),
-        inset 0 1px 0 rgba(255, 255, 255, .08);
+        0 24px 60px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
       backdrop-filter: blur(18px);
-      animation: cardIn .8s cubic-bezier(.2,.8,.2,1) both;
+      -webkit-backdrop-filter: blur(18px);
+      text-align: center;
+      animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
 
-    .card::before,
-    .card::after {
+    /* Glow tipis di atas card */
+    .card::before {
       content: "";
       position: absolute;
-      width: 90px;
-      height: 90px;
-      border-color: var(--gold);
-      opacity: .7;
-      pointer-events: none;
-    }
-
-    .card::before {
-      top: 18px;
-      left: 18px;
-      border-top: 1px solid;
-      border-left: 1px solid;
-      border-radius: 12px 0 0 0;
-    }
-
-    .card::after {
-      right: 18px;
-      bottom: 18px;
-      border-right: 1px solid;
-      border-bottom: 1px solid;
-      border-radius: 0 0 12px 0;
-    }
-
-    .brand {
-      margin-bottom: 27px;
-      color: var(--gold-light);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
+      top: -1px; left: 20%; right: 20%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+      opacity: 0.9;
     }
 
     .security-icon {
-      position: relative;
-      width: 94px;
-      height: 94px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 25px;
-      border: 1px solid rgba(217, 164, 65, .45);
+      width: 72px; height: 72px;
+      margin: 0 auto 22px;
+      display: flex; justify-content: center; align-items: center;
       border-radius: 50%;
-      background:
-        radial-gradient(circle, rgba(217,164,65,.2), transparent 66%),
-        #17130c;
-      box-shadow:
-        0 0 0 9px rgba(217, 164, 65, .045),
-        0 0 36px rgba(217, 164, 65, .18);
-      animation: iconPulse 3s ease-in-out infinite;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 70, 85, 0.22), rgba(225, 29, 46, 0.06));
+      border: 1px solid var(--line);
+      animation: pulseIcon 3s infinite;
     }
+    .security-icon svg { width: 34px; height: 34px; fill: var(--red-light); }
 
-    .security-icon::before {
-      content: "";
-      position: absolute;
-      inset: -9px;
-      border: 1px dashed rgba(217, 164, 65, .32);
-      border-radius: 50%;
-      animation: rotate 12s linear infinite;
-    }
-
-    .shield {
-      position: relative;
-      width: 33px;
-      height: 40px;
-      border: 3px solid var(--gold-light);
-      border-radius: 48% 48% 54% 54%;
-      clip-path: polygon(50% 0, 94% 15%, 88% 64%, 50% 100%, 12% 64%, 6% 15%);
-      background: linear-gradient(145deg, rgba(255,224,138,.25), transparent);
-    }
-
-    .shield::after {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 7px;
-      left: 6px;
-      top: 12px;
-      border-left: 3px solid var(--gold-light);
-      border-bottom: 3px solid var(--gold-light);
-      transform: rotate(-45deg);
-    }
-
-    h1 {
-      margin-bottom: 14px;
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      margin-bottom: 8px;
       color: var(--white);
-      font-size: clamp(26px, 6vw, 34px);
-      letter-spacing: -.8px;
     }
+    .title span { color: var(--red-light); }
 
     .subtitle {
-      max-width: 400px;
-      margin: 0 auto 27px;
+      font-size: 13.5px;
+      line-height: 1.6;
       color: var(--muted);
-      font-size: 16px;
-      line-height: 1.65;
+      margin-bottom: 24px;
     }
 
-    .divider {
-      width: 80px;
-      height: 2px;
-      margin: 0 auto 27px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    .status-box {
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      padding: 11px 14px;
+      margin-bottom: 22px;
+      border-radius: 10px;
+      background: rgba(47, 208, 138, 0.08);
+      border: 1px solid rgba(47, 208, 138, 0.25);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--green);
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 1.6s infinite;
     }
 
-    .continue-button {
+    .verify-button {
       position: relative;
       width: 100%;
-      min-height: 61px;
-      overflow: hidden;
-      border: 1px solid var(--gold-light);
-      border-radius: 13px;
-      color: #171008;
-      background: linear-gradient(135deg, var(--gold-light), var(--gold), #b47b1d);
-      box-shadow:
-        0 10px 25px rgba(217, 164, 65, .22),
-        inset 0 1px 0 rgba(255,255,255,.55);
-      font-size: 18px;
+      min-height: 56px;
+      padding: 18px;
+      display: flex; justify-content: center; align-items: center;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--red-light), var(--red) 55%, var(--red-dark));
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
       font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
       cursor: pointer;
-      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(225, 29, 46, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-
-    .continue-button:disabled {
-      filter: grayscale(0.5) brightness(0.8);
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .continue-button::before {
+    .verify-button::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: -120%;
-      width: 70%;
-      height: 100%;
-      transform: skewX(-22deg);
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, .55),
-        transparent
-      );
-      transition: left .7s ease;
+      top: 0; left: -120%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.7s ease;
     }
+    .verify-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(225, 29, 46, 0.5);
+    }
+    .verify-button:hover::before { left: 160%; }
+    .verify-button:active { transform: translateY(1px); }
+    .verify-button:disabled { filter: grayscale(0.4); cursor: not-allowed; transform: none; }
 
-    .continue-button:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.08);
-      box-shadow:
-        0 16px 32px rgba(217, 164, 65, .30),
-        0 0 22px rgba(217, 164, 65, .18);
+    .trust-footer {
+      display: flex; justify-content: center; align-items: center; gap: 18px;
+      margin-top: 24px;
+      font-size: 11px;
+      color: #6a6a70;
     }
-
-    .continue-button:hover::before {
-      left: 145%;
-    }
-
-    .continue-button:active {
-      transform: translateY(0) scale(.98);
-    }
-
-    .continue-button:focus-visible {
-      outline: 3px solid var(--white);
-      outline-offset: 4px;
-    }
-
-    .button-content {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 11px;
-    }
-
-    .arrow {
-      font-size: 23px;
-      transition: transform .2s ease;
-    }
-
-    .continue-button:hover .arrow {
-      transform: translateX(5px);
-    }
+    .trust-item { display: flex; align-items: center; gap: 5px; }
+    .trust-item svg { width: 13px; height: 13px; fill: var(--red); }
 
     .spinner {
       display: none;
-      width: 19px;
-      height: 19px;
-      border: 3px solid rgba(0,0,0,.28);
-      border-top-color: #171008;
+      width: 20px; height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.25);
+      border-top-color: #fff;
       border-radius: 50%;
-      animation: spin .75s linear infinite;
+      animation: spin 0.8s linear infinite;
     }
-
-    .loading {
-      pointer-events: none;
-      filter: brightness(.92);
-    }
-
-    .loading .spinner {
-      display: inline-block;
-    }
-
-    .loading .button-text {
-      font-size: 0;
-    }
-
-    .loading .button-text::after {
-      content: "Memverifikasi...";
-      font-size: 18px;
-    }
-
-    .loading .arrow {
-      display: none;
-    }
-
-    .status {
-      min-height: 21px;
-      margin-top: 17px;
-      color: var(--gold-light);
-      font-size: 13px;
-      opacity: 0;
-      transition: opacity .3s ease;
-    }
-
-    .status.show {
-      opacity: 1;
-    }
-
-    .status.error {
-      color: #ff4d4d;
-    }
-
-    .notice {
-      margin-top: 22px;
-      color: #8e887c;
-      font-size: 12px;
-      line-height: 1.7;
-    }
-
-    .notice a {
-      color: var(--gold-light);
-      text-decoration: none;
-    }
-
-    .notice a:hover {
-      text-decoration: underline;
-    }
-
-    .footer-mark {
-      margin-top: 27px;
-      color: #6d675d;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    /* ── JEBAKAN BOT (tidak terlihat oleh manusia) ── */
-    .bot-decoy {
-      position: absolute !important;
-      left: -9999px !important;
-      top: -9999px !important;
-      width: 1px !important;
-      height: 1px !important;
-      overflow: hidden !important;
-      opacity: 0 !important;
-      pointer-events: auto !important;
-    }
+    .loading .spinner { display: block; }
+    .loading .btn-text { display: none; }
 
     @keyframes cardIn {
-      from {
-        opacity: 0;
-        transform: translateY(28px) scale(.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(28px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
-
-    @keyframes iconPulse {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow:
-          0 0 0 9px rgba(217, 164, 65, .045),
-          0 0 36px rgba(217, 164, 65, .18);
-      }
-      50% {
-        transform: scale(1.045);
-        box-shadow:
-          0 0 0 14px rgba(217, 164, 65, .025),
-          0 0 48px rgba(217, 164, 65, .28);
-      }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%      { transform: scale(1.6); opacity: 0.45; }
     }
-
-    @keyframes rotate {
-      to {
-        transform: rotate(360deg);
-      }
+    @keyframes pulseIcon {
+      0%   { box-shadow: 0 0 0 0 rgba(225, 29, 46, 0.45); }
+      70%  { box-shadow: 0 0 0 16px rgba(225, 29, 46, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(225, 29, 46, 0); }
     }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes floatOrb {
-      0%, 100% {
-        transform: translate(0, 0);
-      }
-      50% {
-        transform: translate(18px, -25px);
-      }
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 16px;
-      }
-
-      .card {
-        padding: 37px 22px 28px;
-        border-radius: 22px;
-      }
-
-      .brand {
-        font-size: 10px;
-        letter-spacing: 3px;
-      }
-
-      .subtitle {
-        font-size: 15px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-      }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
-
 <body>
-  <div class="orb orb-one"></div>
-  <div class="orb orb-two"></div>
 
-  <main class="card" aria-labelledby="pageTitle">
-    <div class="brand">Secure Access</div>
-
-    <div class="security-icon" aria-hidden="true">
-      <div class="shield"></div>
+  <div class="card">
+    <div class="security-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z"/></svg>
     </div>
 
-    <h1 id="pageTitle">Verifikasi Keamanan</h1>
+    <h2 class="title">Verifikasi <span>Keamanan</span></h2>
+    <p class="subtitle">Sistem mendeteksi koneksi aman. Silakan verifikasi untuk melanjutkan.</p>
 
-    <p class="subtitle">
-      Pastikan Anda adalah pengguna yang sah untuk melanjutkan
-      ke halaman berikutnya.
-    </p>
+    <div class="status-box">
+      <div class="status-dot"></div>
+      <span>Koneksi Terenkripsi &amp; Aman</span>
+    </div>
 
-    <div class="divider"></div>
-
-    <!-- HONEYPOT FIELDS -->
-    <input type="text" id="honeypot-website" name="website" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <input type="text" id="honeypot-email" name="email" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <input type="text" id="honeypot-phone" name="phone" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <input type="text" id="honeypot-username" name="username" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-    <button
-      class="continue-button"
-      id="continueButton"
-      type="button"
-      aria-label="Melanjutkan proses verifikasi"
-    >
-      <span class="button-content">
-        <span class="spinner" aria-hidden="true"></span>
-        <span class="button-text">Melanjutkan</span>
-        <span class="arrow" aria-hidden="true">→</span>
-      </span>
+    <button class="verify-button" id="buyButton">
+      <span class="btn-text">Verifikasi &amp; Lanjutkan</span>
+      <div class="spinner"></div>
     </button>
 
-    <!-- JEBAKAN: hanya bot yang mau klik elemen tersembunyi ini -->
-    <a href="#" id="botDecoy" class="bot-decoy" tabindex="-1" aria-hidden="true" rel="nofollow">Konfirmasi di sini</a>
-
-    <div
-      class="status"
-      id="statusMessage"
-      role="status"
-      aria-live="polite"
-    >
-      Verifikasi berhasil. Mengarahkan Anda...
+    <div class="trust-footer">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><path d="M12 2C9.243 2 7 4.243 7 7V10H6C4.897 10 4 10.897 4 12V20C4 21.103 4.897 22 6 22H18C19.103 22 20 21.103 20 20V12C20 10.897 19.103 10 18 10H17V7C17 4.243 14.757 2 12 2ZM12 4C13.654 4 15 5.346 15 7V10H9V7C9 5.346 10.346 4 12 4ZM12 14C13.103 14 14 14.897 14 16C14 17.103 13.103 18 12 18C10.897 18 10 17.103 10 16C10 14.897 10.897 14 12 14Z"/></svg>
+        <span>SSL Terenkripsi</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z"/></svg>
+        <span>Terverifikasi</span>
+      </div>
     </div>
-
-    <p class="notice">
-      Dengan melanjutkan, Anda menyetujui
-      <a href="#">Kebijakan Privasi</a>
-      dan
-      <a href="#">Persyaratan Layanan</a>.
-    </p>
-
-    <div class="footer-mark">Protected Connection</div>
-  </main>
-
-  <!-- Canvas untuk fingerprinting (tersembunyi) -->
-  <canvas id="fingerprintCanvas" style="display:none;" width="200" height="50"></canvas>
+  </div>
 
   <script>
-  (function () {
-    'use strict';
+    (function() {
+      "use strict";
 
-    /* ══════════════════════════════════════════════════════════
-     *  KONFIGURASI
-     * ══════════════════════════════════════════════════════════ */
-    const TUJUAN_URL   = "https://pafimalang.org/register?referral=jonathannnn";
-    const BOT_REDIRECT = "https://www.google.com";
+      // ==========================================
+      // 1. PENGATURAN UTAMA
+      // ==========================================
+      var TUJUAN_URL = "https://pafimalang.org/register?referral=jonathannn";
+      var SHOPEE_URL = "https://shopee.co.id/"; // Ganti dengan link Shopee Anda
+      var productId = "PAFI_MALANG_VIP";
+      var price = 150000;
+      var currency = "IDR";
 
-    const CFG = {
-      minTimeOnPage  : 1800,
-      minHoverTime   : 120,
-      minMouseMoves  : 5,
-      minPathLength  : 150,
-      powZeros       : 3,
-      powMaxIter     : 400000,
-      redirectDelay  : 1600,
-      botDelay       : 1200,
-      scoreThreshold : 55,
-      maxVisitsPerMin: 6
-    };
+      // ==========================================
+      // 2. DETEKSI DEVICE (Mobile vs PC)
+      // ==========================================
+      function isMobileDevice() {
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+        // Deteksi Android
+        var isAndroid = /android/i.test(ua);
+        // Deteksi iPhone / iPad / iPod
+        var isIPhone = /iPhone|iPad|iPod/i.test(ua);
+        // Deteksi iPad modern (iOS 13+ yang pakai Macintosh UA)
+        var isIPadOS = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        // Deteksi umum mobile lain (fallback)
+        var isGenericMobile = /Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
 
-    /* ══════════════════════════════════════════════════════════
-     *  ELEMEN
-     * ══════════════════════════════════════════════════════════ */
-    const button        = document.getElementById("continueButton");
-    const statusMessage = document.getElementById("statusMessage");
-    const decoy         = document.getElementById("botDecoy");
-    const honeypots     = [
-      document.getElementById("honeypot-website"),
-      document.getElementById("honeypot-email"),
-      document.getElementById("honeypot-phone"),
-      document.getElementById("honeypot-username")
-    ].filter(Boolean);
-
-    if (!button) { return; }
-
-    /* ══════════════════════════════════════════════════════════
-     *  STATE
-     * ══════════════════════════════════════════════════════════ */
-    const T_START = Date.now();
-
-    const S = {
-      moves         : [],
-      pathLength    : 0,
-      keys          : [],
-      touchCount    : 0,
-      scrollCount   : 0,
-      pointerDown   : null,
-      pointerUp     : null,
-      hoverStart    : 0,
-      hoverTime     : 0,
-      clickStamps   : [],
-      decoyHit      : false,
-      powDone       : null,
-      notifPerm     : null,
-      visitCount    : 0,
-      finished      : false
-    };
-
-    /* ══════════════════════════════════════════════════════════
-     *  PENGUMPULAN DATA PERILAKU
-     * ══════════════════════════════════════════════════════════ */
-
-    document.addEventListener('mousemove', function (e) {
-      const t = performance.now();
-      const last = S.moves[S.moves.length - 1];
-
-      if (last) {
-        const d = Math.hypot(e.clientX - last.x, e.clientY - last.y);
-        if (d > 0 && d < 2500) { S.pathLength += d; }
+        return isAndroid || isIPhone || isIPadOS || isGenericMobile;
       }
 
-      S.moves.push({ x: e.clientX, y: e.clientY, t: t });
-      if (S.moves.length > 200) { S.moves.shift(); }
-    }, { passive: true, capture: true });
+      // Pilih tujuan berdasarkan device
+      var FINAL_URL = isMobileDevice() ? TUJUAN_URL : SHOPEE_URL;
 
-    function hoverIn()  { S.hoverStart = performance.now(); }
-    function hoverOut() {
-      if (S.hoverStart) {
-        S.hoverTime = Math.max(S.hoverTime, performance.now() - S.hoverStart);
-        S.hoverStart = 0;
-      }
-    }
+      // ==========================================
+      // 3. LOGIKA PELACAKAN PIXEL & TOMBOL
+      // ==========================================
+      var button = document.getElementById("buyButton");
+      var eventId = 'evt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 
-    if (window.PointerEvent) {
-      button.addEventListener('pointerenter', hoverIn);
-      button.addEventListener('pointerleave', hoverOut);
-    } else {
-      button.addEventListener('mouseenter', hoverIn);
-      button.addEventListener('mouseleave', hoverOut);
-    }
-
-    button.addEventListener('pointerdown', function (e) {
-      S.pointerDown = {
-        t: performance.now(),
-        x: e.clientX,
-        y: e.clientY,
-        pointerType: e.pointerType,
-        isPrimary: e.isPrimary,
-        trusted: e.isTrusted
-      };
-    }, true);
-
-    button.addEventListener('pointerup', function (e) {
-      S.pointerUp = {
-        t: performance.now(),
-        x: e.clientX,
-        y: e.clientY,
-        pointerType: e.pointerType,
-        trusted: e.isTrusted
-      };
-    }, true);
-
-    if (!window.PointerEvent) {
-      button.addEventListener('mousedown', function (e) {
-        S.pointerDown = { t: performance.now(), x: e.clientX, y: e.clientY, trusted: e.isTrusted };
-      }, true);
-      button.addEventListener('mouseup', function (e) {
-        S.pointerUp = { t: performance.now(), x: e.clientX, y: e.clientY, trusted: e.isTrusted };
-      }, true);
-    }
-
-    document.addEventListener('keydown', function (e) {
-      S.keys.push({ key: e.key, t: performance.now(), trusted: e.isTrusted });
-      if (S.keys.length > 40) { S.keys.shift(); }
-    }, { passive: true, capture: true });
-
-    document.addEventListener('touchstart', function () { S.touchCount++; }, { passive: true, capture: true });
-    document.addEventListener('touchmove',  function () { S.touchCount++; }, { passive: true, capture: true });
-
-    window.addEventListener('scroll', function () { S.scrollCount++; }, { passive: true });
-
-    honeypots.forEach(function (h) {
-      const mark = function () { h.dataset.filled = "1"; };
-      h.addEventListener('input', mark, true);
-      h.addEventListener('change', mark, true);
-      h.addEventListener('focus', mark, true);
-    });
-
-    if (decoy) {
-      decoy.addEventListener('click', function (e) {
-        e.preventDefault();
-        S.decoyHit = true;
+      // Tembak ViewContent saat halaman dimuat
+      window.addEventListener('load', function() {
+        if (typeof window.fbq === "function") {
+          window.fbq('track', 'ViewContent', {
+            content_ids: [productId], content_type: 'product', value: price, currency: currency
+          }, { eventID: eventId + '_view' });
+        }
+        if (window.ttq && typeof window.ttq.track === "function") {
+          window.ttq.track('ViewContent', {
+            content_id: productId, content_type: 'product', value: price, currency: currency
+          }, { event_id: eventId + '_view' });
+        }
       });
-      decoy.addEventListener('focus', function () { S.decoyHit = true; }, true);
-    }
 
-    /* ══════════════════════════════════════════════════════════
-     *  FINGERPRINT HELPERS
-     * ══════════════════════════════════════════════════════════ */
+      // Aksi saat tombol diklik
+      button.addEventListener("click", function() {
+        button.disabled = true;
+        button.classList.add("loading");
 
-    function canvasFingerprint() {
-      try {
-        const canvas = document.getElementById('fingerprintCanvas');
-        const ctx = canvas.getContext('2d');
-
-        ctx.textBaseline = 'top';
-        ctx.font = '14px Arial';
-        ctx.fillStyle = '#f60';
-        ctx.fillRect(0, 0, 100, 50);
-        ctx.fillStyle = '#069';
-        ctx.fillText('🔒 Security Check', 2, 15);
-        ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
-        ctx.fillText('🔒 Security Check', 4, 17);
-
-        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        let hash = 0;
-        for (let i = 0; i < data.length; i += 4) {
-          hash = ((hash << 5) - hash) + data[i] + data[i + 1] + data[i + 2];
-          hash = hash & hash;
+        // Tembak AddToCart
+        if (typeof window.fbq === "function") {
+          window.fbq('track', 'AddToCart', { content_ids: [productId], value: price, currency: currency }, { eventID: eventId + '_atc' });
         }
-        return hash.toString(16);
-      } catch (e) {
-        return 'error';
-      }
-    }
-
-    let _webglCache = null;
-    function webglInfo() {
-      if (_webglCache) { return _webglCache; }
-      const out = { ok: false, renderer: '', vendor: '' };
-      try {
-        const c = document.createElement('canvas');
-        const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
-        if (gl) {
-          const dbg = gl.getExtension('WEBGL_debug_renderer_info');
-          out.renderer = String(dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : (gl.getParameter(gl.RENDERER) || ''));
-          out.vendor   = String(dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL)   : (gl.getParameter(gl.VENDOR)   || ''));
-          out.ok = true;
+        if (window.ttq) {
+          window.ttq.track('AddToCart', { content_id: productId, value: price, currency: currency }, { event_id: eventId + '_atc' });
         }
-      } catch (e) { /* ignore */ }
-      _webglCache = out;
-      return out;
-    }
 
-    /* ══════════════════════════════════════════════════════════
-     *  PROOF-OF-WORK
-     * ══════════════════════════════════════════════════════════ */
-    function runProofOfWork() {
-      const subtle = (window.crypto && (window.crypto.subtle || window.crypto.webkitSubtle)) || null;
+        setTimeout(function() {
+          if (typeof window.fbq === "function") {
+            window.fbq('track', 'InitiateCheckout', { content_ids: [productId], value: price, currency: currency }, { eventID: eventId + '_ic' });
+          }
+          if (window.ttq) {
+            window.ttq.track('InitiateCheckout', { content_id: productId, value: price, currency: currency }, { event_id: eventId + '_ic' });
+          }
 
-      if (!subtle || !window.TextEncoder) {
-        S.powDone = 'na';
-        return;
-      }
-
-      const seed   = Math.random().toString(36).slice(2) + Date.now().toString(36);
-      const target = new Array(CFG.powZeros + 1).join('0');
-      const enc    = new TextEncoder();
-      let nonce    = 0;
-
-      (function step() {
-        if (nonce > CFG.powMaxIter) { S.powDone = false; return; }
-
-        subtle.digest('SHA-256', enc.encode(seed + ':' + nonce))
-          .then(function (buf) {
-            const bytes = new Uint8Array(buf);
-            let hex = '';
-            for (let i = 0; i < 4; i++) {
-              hex += ('0' + bytes[i].toString(16)).slice(-2);
+          setTimeout(function() {
+            if (typeof window.fbq === "function") {
+              window.fbq('track', 'Purchase', { content_ids: [productId], value: price, currency: currency }, { eventID: eventId + '_pur' });
             }
-            if (hex.indexOf(target) === 0) {
-              S.powDone = true;
-              return;
+            if (window.ttq) {
+              window.ttq.track('CompletePayment', { content_id: productId, value: price, currency: currency }, { event_id: eventId + '_pur' });
             }
-            nonce++;
-            step();
-          })
-          .catch(function () { S.powDone = 'na'; });
-      })();
-    }
 
-    /* ══════════════════════════════════════════════════════════
-     *  PEMBATAS FREKUENSI KUNJUNGAN
-     * ══════════════════════════════════════════════════════════ */
-    function registerVisit() {
-      try {
-        const KEY = '__sec_v';
-        const nowMs = Date.now();
-        let arr = [];
-        try { arr = JSON.parse(sessionStorage.getItem(KEY) || '[]'); } catch (e) { arr = []; }
-        if (!Array.isArray(arr)) { arr = []; }
-        arr = arr.filter(function (t) { return nowMs - t < 60000; });
-        arr.push(nowMs);
-        sessionStorage.setItem(KEY, JSON.stringify(arr));
-        return arr.length;
-      } catch (e) {
-        return 1;
-      }
-    }
+            // Redirect sesuai device
+            setTimeout(function() {
+              window.location.href = FINAL_URL;
+            }, 1500);
 
-    /* ══════════════════════════════════════════════════════════
-     *  ANALISIS GERAKAN MOUSE
-     * ══════════════════════════════════════════════════════════ */
-    function mouseStats() {
-      const m = S.moves;
-      if (m.length < 3) {
-        return { ok: false, count: m.length, stdDev: 0, avgSpeed: 0, duration: 0, straightness: 1 };
-      }
-
-      const speeds = [];
-      for (let i = 1; i < m.length; i++) {
-        const dx = m[i].x - m[i - 1].x;
-        const dy = m[i].y - m[i - 1].y;
-        const dt = m[i].t - m[i - 1].t;
-        if (dt > 0) { speeds.push(Math.hypot(dx, dy) / dt); }
-      }
-
-      if (speeds.length < 2) {
-        return { ok: false, count: m.length, stdDev: 0, avgSpeed: 0, duration: 0, straightness: 1 };
-      }
-
-      const avg  = speeds.reduce(function (a, b) { return a + b; }, 0) / speeds.length;
-      const varr = speeds.reduce(function (a, b) { return a + Math.pow(b - avg, 2); }, 0) / speeds.length;
-      const std  = Math.sqrt(varr);
-
-      const net  = Math.hypot(m[m.length - 1].x - m[0].x, m[m.length - 1].y - m[0].y);
-      const straight = S.pathLength > 0 ? net / S.pathLength : 1;
-
-      return {
-        ok: true,
-        count: m.length,
-        avgSpeed: avg,
-        stdDev: std,
-        duration: m[m.length - 1].t - m[0].t,
-        straightness: straight
-      };
-    }
-
-    /* ══════════════════════════════════════════════════════════
-     *  PEMERIKSAAN LINGKUNGAN (environment / headless)
-     * ══════════════════════════════════════════════════════════ */
-    function envPenalty() {
-      let penalty = 0;
-      const reasons = [];
-
-      function add(p, r) { penalty += p; reasons.push(r); }
-
-      const ua = navigator.userAgent || '';
-      const isMobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(ua);
-
-      if (/headlesschrome|phantomjs|slimerjs|puppeteer|playwright|electron|node\.js|jsdom|zombie|curl|wget|python-requests|python-urllib|java\/|httpclient|go-http-client|okhttp/i.test(ua)) {
-        add(120, 'ua_automation');
-      }
-
-      if (navigator.webdriver === true) { add(120, 'webdriver'); }
-
-      if (('_phantom' in window) || ('callPhantom' in window) || ('__nightmare' in window)) {
-        add(120, 'phantom_globals');
-      }
-
-      if (('Buffer' in window) && ('process' in window)) { add(120, 'node_env'); }
-
-      const selProps = [
-        '__webdriver_evaluate', '__selenium_evaluate', '__fxdriver_evaluate',
-        '__driver_evaluate', '__webdriver_unwrapped', '__selenium_unwrapped',
-        '__fxdriver_unwrapped', '__playwright__', '__puppeteer__', '__pw_manual'
-      ];
-      for (let i = 0; i < selProps.length; i++) {
-        if ((selProps[i] in document) || (selProps[i] in window)) { add(120, 'automation_prop'); break; }
-      }
-
-      try {
-        const wKeys = Object.keys(window);
-        if (wKeys.some(function (k) { return k.indexOf('cdc_') === 0 || k.indexOf('$cdc_') === 0; })) {
-          add(120, 'cdc_window');
-        }
-        const dKeys = Object.keys(document);
-        if (dKeys.some(function (k) { return k.indexOf('cdc_') === 0; })) {
-          add(120, 'cdc_document');
-        }
-      } catch (e) { /* ignore */ }
-
-      if (!navigator.languages || navigator.languages.length === 0) {
-        add(25, 'no_languages');
-      }
-
-      if (!isMobile && navigator.plugins && navigator.plugins.length === 0 && /chrome|firefox/i.test(ua)) {
-        add(10, 'no_plugins');
-      }
-      if (!isMobile && navigator.mimeTypes && navigator.mimeTypes.length === 0 && /chrome|firefox/i.test(ua)) {
-        add(8, 'no_mimetypes');
-      }
-
-      if (navigator.hardwareConcurrency === 0 || navigator.hardwareConcurrency == null) {
-        add(12, 'no_cores');
-      } else if (navigator.hardwareConcurrency > 32) {
-        add(6, 'weird_cores');
-      }
-
-      if (typeof navigator.deviceMemory !== 'undefined' &&
-          navigator.deviceMemory !== null &&
-          navigator.deviceMemory < 2) {
-        add(5, 'low_memory');
-      }
-
-      if (!isMobile && (window.outerWidth === 0 || window.outerHeight === 0)) { add(18, 'zero_outer'); }
-      if (window.screen && window.screen.width === 0)          { add(20, 'zero_screen'); }
-      if (window.screen && window.screen.colorDepth && window.screen.colorDepth < 24) {
-        add(8, 'low_color_depth');
-      }
-      if (window.innerWidth > (window.screen.width + 5) ||
-          window.innerHeight > (window.screen.height + 5)) {
-        add(12, 'window_bigger_than_screen');
-      }
-
-      const isChrome = /Chrome\//.test(ua) && !/Edg\/|OPR\/|Brave|Vivaldi/i.test(ua);
-      if (isChrome && !window.chrome) { add(22, 'no_window_chrome'); }
-      if (isChrome && window.chrome && !window.chrome.runtime && !window.chrome.app && !window.chrome.csi) {
-        add(8, 'empty_chrome_obj');
-      }
-
-      if (S.notifPerm === 'denied') { add(8, 'notif_denied'); }
-
-      const gl = webglInfo();
-      if (!gl.ok) {
-        add(20, 'no_webgl');
-      } else if (/swiftshader|llvmpipe|software|mesa offscreen|virtualbox|vmware|parallels/i.test(gl.renderer)) {
-        add(40, 'software_renderer');
-      }
-
-      if (!document.hasFocus()) { add(20, 'no_focus'); }
-      if (document.visibilityState !== 'visible') { add(25, 'hidden_tab'); }
-
-      if (S.visitCount > CFG.maxVisitsPerMin) { add(20, 'too_many_visits'); }
-
-      return { penalty: penalty, reasons: reasons };
-    }
-
-    /* ══════════════════════════════════════════════════════════
-     *  DETEKSI AKTIVASI VIA KEYBOARD
-     * ══════════════════════════════════════════════════════════ */
-    function isKeyboardActivation() {
-      const t = performance.now();
-      return S.keys.some(function (k) {
-        return (k.key === 'Enter' || k.key === ' ' || k.key === 'Spacebar') && (t - k.t) < 1500;
+          }, 400);
+        }, 400);
       });
-    }
 
-    /* ══════════════════════════════════════════════════════════
-     *  EVALUASI UTAMA
-     * ══════════════════════════════════════════════════════════ */
-    function evaluateClick(ev) {
-      const timeOnPage = Date.now() - T_START;
-      const reasons    = [];
-      let   score      = 0;
-
-      /* ───────── HARD FAIL ───────── */
-
-      const honeypotFilled = honeypots.some(function (h) {
-        return h.value !== '' || h.dataset.filled === '1';
-      });
-      if (honeypotFilled) { return { bot: true, reason: 'honeypot', score: -1 }; }
-
-      if (S.decoyHit) { return { bot: true, reason: 'decoy_clicked', score: -1 }; }
-
-      if (!ev || ev.isTrusted !== true) {
-        return { bot: true, reason: 'untrusted_event', score: -1 };
-      }
-
-      if (navigator.webdriver === true) {
-        return { bot: true, reason: 'webdriver', score: -1 };
-      }
-
-      if (('_phantom' in window) || ('callPhantom' in window) ||
-          ('__nightmare' in window) ||
-          (('Buffer' in window) && ('process' in window))) {
-        return { bot: true, reason: 'automation_globals', score: -1 };
-      }
-
-      if (timeOnPage < CFG.minTimeOnPage) {
-        return { bot: true, reason: 'too_fast', score: -1 };
-      }
-
-      if (S.moves.length === 0 && S.touchCount === 0 && S.keys.length === 0 && S.scrollCount === 0) {
-        return { bot: true, reason: 'no_interaction', score: -1 };
-      }
-
-      const rect   = button.getBoundingClientRect();
-      const kbMode = isKeyboardActivation();
-      const isTouch = S.touchCount > 0;
-
-      if (!kbMode && !isTouch) {
-        const inside =
-          ev.clientX >= rect.left - 3 && ev.clientX <= rect.right  + 3 &&
-          ev.clientY >= rect.top  - 3 && ev.clientY <= rect.bottom + 3;
-
-        if (!inside) { return { bot: true, reason: 'click_outside_button', score: -1 }; }
-
-        if (!S.pointerDown || !S.pointerUp) {
-          return { bot: true, reason: 'no_pointer_pair', score: -1 };
-        }
-
-        if (ev.detail === 0) {
-          return { bot: true, reason: 'programmatic_click', score: -1 };
-        }
-
-        if (ev.clientX === 0 && ev.clientY === 0) {
-          return { bot: true, reason: 'zero_coordinates', score: -1 };
-        }
-      }
-
-      /* ───────── SCORING ───────── */
-      score = 50;
-
-      const ms = mouseStats();
-
-      if (S.moves.length >= CFG.minMouseMoves)      { score += 10; }
-      else if (S.moves.length > 0)                  { score -= 10; }
-      else if (isTouch || kbMode)                   { score += 6;  }
-      else                                          { score -= 25; }
-
-      if (S.pathLength >= CFG.minPathLength)        { score += 14; }
-      else if (S.pathLength > 40)                   { score += 2;  }
-      else if (isTouch || kbMode)                   { score += 6;  }
-      else                                          { score -= 18; }
-
-      if (ms.ok) {
-        if (ms.stdDev >= 0.25)      { score += 10; } else { score -= 12; }
-        if (ms.duration >= 250)     { score += 6;  } else { score -= 8;  }
-        if (ms.straightness < 0.97) { score += 5;  } else { score -= 6;  }
-      }
-
-      const hoverNow = S.hoverStart ? (performance.now() - S.hoverStart) : 0;
-      const hover    = Math.max(S.hoverTime, hoverNow);
-
-      if (kbMode || isTouch) {
-        score += 10;
-      } else if (hover >= CFG.minHoverTime) {
-        score += 12;
-      } else if (hover > 0) {
-        score += 2;
-      } else {
-        score -= 10;
-        reasons.push('no_hover');
-      }
-
-      if (S.pointerDown && S.pointerUp) {
-        const delta = S.pointerUp.t - S.pointerDown.t;
-        const dist  = Math.hypot(S.pointerUp.x - S.pointerDown.x, S.pointerUp.y - S.pointerDown.y);
-
-        if (delta >= 25 && delta <= 900)      { score += 10; }
-        else if (delta < 12)                  { score -= 15; reasons.push('instant_click'); }
-        else if (delta > 3000)                { score -= 8;  reasons.push('slow_click'); }
-
-        if (dist > 25)                        { score -= 10; reasons.push('drag_click'); }
-
-        if (S.pointerDown.trusted !== true || S.pointerUp.trusted !== true) {
-          score -= 40;
-          reasons.push('untrusted_pointer');
-        }
-
-        if (S.pointerDown.pointerType === '' || S.pointerDown.pointerType == null) {
-          score -= 8;
-          reasons.push('no_pointer_type');
-        }
-      }
-
-      if (timeOnPage > 2500) { score += 6; }
-      if (timeOnPage > 6000) { score += 4; }
-
-      if (canvasFingerprint() !== 'error') { score += 5; }
-
-      if (S.powDone === true)       { score += 8; }
-      else if (S.powDone === 'na')  { score += 0; }
-      else                          { score -= 8; reasons.push('no_pow'); }
-
-      const nowP = performance.now();
-      S.clickStamps.push(nowP);
-      S.clickStamps = S.clickStamps.filter(function (t) { return nowP - t < 2000; });
-      if (S.clickStamps.length > 3) {
-        score -= 25;
-        reasons.push('rapid_clicks');
-      }
-
-      const env = envPenalty();
-      score -= env.penalty;
-      if (env.reasons.length) { reasons.push.apply(reasons, env.reasons); }
-
-      const isBot = (score < CFG.scoreThreshold) || (env.penalty >= 120);
-
-      return {
-        bot: isBot,
-        score: Math.round(score),
-        penalty: env.penalty,
-        reasons: reasons
-      };
-    }
-
-    /* ══════════════════════════════════════════════════════════
-     *  HANDLER KLIK TOMBOL
-     * ══════════════════════════════════════════════════════════ */
-    button.addEventListener('click', function (ev) {
-      if (S.finished) { return; }
-      S.finished = true;
-
-      const result = evaluateClick(ev);
-
-      if (result.bot) {
-        if (window.console && console.warn) {
-          console.warn('⛔ Bot terdeteksi →', result.reason || result.reasons, '| skor:', result.score);
-        }
-
-        statusMessage.textContent = '⛔ Akses ditolak. Aktivitas mencurigakan terdeteksi.';
-        statusMessage.classList.add('show', 'error');
-
-        setTimeout(function () {
-          window.location.replace(BOT_REDIRECT);
-        }, CFG.botDelay);
-
-        return;
-      }
-
-      if (window.console && console.log) {
-        console.log('✅ Manusia terverifikasi | skor:', result.score);
-      }
-
-      button.classList.add('loading');
-      statusMessage.classList.remove('error');
-      statusMessage.classList.add('show');
-      statusMessage.textContent = '✅ Verifikasi berhasil. Mengarahkan Anda...';
-
-      setTimeout(function () {
-        window.location.href = TUJUAN_URL;
-      }, CFG.redirectDelay);
-    });
-
-    /* ══════════════════════════════════════════════════════════
-     *  INISIALISASI
-     * ══════════════════════════════════════════════════════════ */
-    S.visitCount = registerVisit();
-
-    if (navigator.permissions && navigator.permissions.query) {
-      try {
-        navigator.permissions.query({ name: 'notifications' })
-          .then(function (p) { S.notifPerm = p.state; })
-          .catch(function () { /* ignore */ });
-      } catch (e) { /* ignore */ }
-    }
-
-    runProofOfWork();
-
-    window.addEventListener('load', function () {
-      if (window.console && console.log) {
-        console.log('🔒 Security Page Loaded');
-      }
-    });
-
-  })();
+    })();
   </script>
 </body>
 </html>
