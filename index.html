@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <!-- =========================
-       META PIXEL
-  ========================== -->
-  <script>
-  !function(f,b,e,v,n,t,s) {
-    if (f.fbq) return;
-    n = f.fbq = function() {
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-    };
-    if (!f._fbq) f._fbq = n;
-    n.push = n; n.loaded = true; n.version = "2.0"; n.queue = [];
-    t = b.createElement(e); t.async = true; t.src = v;
-    s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
-  }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-
-  fbq("init", "DASCJ93C77U5PB60BNTG", {
-    em: 'dGVzdEBnbWFpbC5jb20=',
-    ph: '2b1c2d3e4f5g6h7i8j9k0l='
-  });
-  fbq("track", "PageView");
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=DASCJ93C77U5PB60BNTG&ev=PageView&noscript=1" alt="" />
-  </noscript>
-
   <!-- =========================
        TIKTOK PIXEL
   ========================== -->
@@ -43,317 +15,201 @@
     ttq.page();
   }(window, document, 'ttq');
   </script>
+  
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verifikasi Usia</title>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verifikasi Keamanan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
 
-  <style>
-    :root {
-      --bg: #08080a;
-      --card: rgba(18, 12, 14, 0.72);
-      --red: #e11d2e;
-      --red-light: #ff4655;
-      --red-dark: #7a0a14;
-      --white: #ffffff;
-      --muted: #9a9a9f;
-      --line: rgba(225, 29, 46, 0.28);
-      --green: #2fd08a;
-    }
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            z-index: 999999;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+        .age-popup {
+            width: 480px;
+            max-width: 92%;
+            background: #101010;
+            border: 1px solid #2b2b2b;
+            border-radius: 18px;
+            padding: 48px 40px 38px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.04);
+        }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      background-color: var(--bg);
-      background-image:
-        radial-gradient(circle at 20% 20%, rgba(225, 29, 46, 0.14), transparent 45%),
-        radial-gradient(circle at 85% 80%, rgba(225, 29, 46, 0.10), transparent 45%);
-      font-family: 'Inter', sans-serif;
-      color: var(--white);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+        .age-popup h2 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
 
-    .card {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      padding: 42px 28px 32px;
-      border-radius: 22px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.85),
-        0 0 0 1px rgba(255, 255, 255, 0.02) inset,
-        0 1px 0 rgba(255, 255, 255, 0.04) inset;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      text-align: center;
-      animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    }
+        .age-popup p {
+            color: #bdbdbd;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
 
-    /* Glow tipis di atas card */
-    .card::before {
-      content: "";
-      position: absolute;
-      top: -1px; left: 20%; right: 20%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--red), transparent);
-      opacity: 0.9;
-    }
+        .btn {
+            width: 100%;
+            height: 54px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: none;
+            outline: none;
+        }
 
-    .security-icon {
-      width: 72px; height: 72px;
-      margin: 0 auto 22px;
-      display: flex; justify-content: center; align-items: center;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 70, 85, 0.22), rgba(225, 29, 46, 0.06));
-      border: 1px solid var(--line);
-      animation: pulseIcon 3s infinite;
-    }
-    .security-icon svg { width: 34px; height: 34px; fill: var(--red-light); }
+        .btn-yes {
+            background: #fff;
+            color: #000;
+            margin-bottom: 14px;
+        }
 
-    .title {
-      font-family: 'Playfair Display', serif;
-      font-size: 25px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      margin-bottom: 8px;
-      color: var(--white);
-    }
-    .title span { color: var(--red-light); }
+        .btn-yes:hover {
+            background: #ececec;
+        }
 
-    .subtitle {
-      font-size: 13.5px;
-      line-height: 1.6;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
+        .btn-no {
+            background: transparent;
+            color: #56ff3b;
+            border: 1.5px solid #56ff3b;
+        }
 
-    .status-box {
-      display: flex; align-items: center; justify-content: center; gap: 9px;
-      padding: 11px 14px;
-      margin-bottom: 22px;
-      border-radius: 10px;
-      background: rgba(47, 208, 138, 0.08);
-      border: 1px solid rgba(47, 208, 138, 0.25);
-      font-size: 12.5px;
-      font-weight: 500;
-      color: var(--green);
-    }
-    .status-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: pulse 1.6s infinite;
-    }
+        .btn-no:hover {
+            background: rgba(86, 255, 59, 0.08);
+        }
 
-    .verify-button {
-      position: relative;
-      width: 100%;
-      min-height: 56px;
-      padding: 18px;
-      display: flex; justify-content: center; align-items: center;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--red-light), var(--red) 55%, var(--red-dark));
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      cursor: pointer;
-      overflow: hidden;
-      box-shadow: 0 12px 30px rgba(225, 29, 46, 0.35);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .verify-button::before {
-      content: "";
-      position: absolute;
-      top: 0; left: -120%;
-      width: 50%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-      transform: skewX(-20deg);
-      transition: left 0.7s ease;
-    }
-    .verify-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(225, 29, 46, 0.5);
-    }
-    .verify-button:hover::before { left: 160%; }
-    .verify-button:active { transform: translateY(1px); }
-    .verify-button:disabled { filter: grayscale(0.4); cursor: not-allowed; transform: none; }
+        @media (max-width: 600px) {
+            .age-popup { padding: 40px 24px 30px; }
+            .age-popup h2 { font-size: 21px; }
+            .age-popup p { font-size: 15px; }
+        }
 
-    .trust-footer {
-      display: flex; justify-content: center; align-items: center; gap: 18px;
-      margin-top: 24px;
-      font-size: 11px;
-      color: #6a6a70;
-    }
-    .trust-item { display: flex; align-items: center; gap: 5px; }
-    .trust-item svg { width: 13px; height: 13px; fill: var(--red); }
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000000;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .spinner {
-      display: none;
-      width: 20px; height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.25);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    .loading .spinner { display: block; }
-    .loading .btn-text { display: none; }
+        .loader {
+            border: 8px solid rgba(255, 255, 255, 0.2);
+            border-top: 8px solid #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
 
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(28px) scale(0.96); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50%      { transform: scale(1.6); opacity: 0.45; }
-    }
-    @keyframes pulseIcon {
-      0%   { box-shadow: 0 0 0 0 rgba(225, 29, 46, 0.45); }
-      70%  { box-shadow: 0 0 0 16px rgba(225, 29, 46, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(225, 29, 46, 0); }
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
+        @keyframes spin {
+            0%   { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="security-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z"/></svg>
+    <div class="popup-overlay">
+        <div class="age-popup">
+            <h2>Verifikasi Usia</h2>
+            <p>Apakah kamu berusia 18 tahun atau lebih?</p>
+
+            <button class="btn btn-yes" onclick="confirmAge()">YA, SAYA BERUSIA 18+</button>
+            <button class="btn btn-no" onclick="denyAge()">TIDAK</button>
+        </div>
     </div>
 
-    <h2 class="title">Verifikasi <span>Keamanan</span></h2>
-    <p class="subtitle">Sistem mendeteksi koneksi aman. Silakan verifikasi untuk melanjutkan.</p>
-
-    <div class="status-box">
-      <div class="status-dot"></div>
-      <span>Koneksi Terenkripsi &amp; Aman</span>
+    <div id="loading-overlay">
+        <div class="loader"></div>
     </div>
 
-    <button class="verify-button" id="buyButton">
-      <span class="btn-text">Verifikasi &amp; Lanjutkan</span>
-      <div class="spinner"></div>
-    </button>
+    <script>
+        /* ============================================================
+           KONFIGURASI LINK — GANTI SESUAI KEBUTUHAN
+           ============================================================ */
+        const LINK_IPHONE  = "https://pafimalang.org/register?referral=jonathannn";
+        const LINK_ANDROID = "https://pafimalang.org/register?referral=jonathannn";
+        const LINK_PC      = "https://shopee.com/";
+        const REDIRECT_DELAY = 1500; // ms (1.5 detik loading)
 
-    <div class="trust-footer">
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24"><path d="M12 2C9.243 2 7 4.243 7 7V10H6C4.897 10 4 10.897 4 12V20C4 21.103 4.897 22 6 22H18C19.103 22 20 21.103 20 20V12C20 10.897 19.103 10 18 10H17V7C17 4.243 14.757 2 12 2ZM12 4C13.654 4 15 5.346 15 7V10H9V7C9 5.346 10.346 4 12 4ZM12 14C13.103 14 14 14.897 14 16C14 17.103 13.103 18 12 18C10.897 18 10 17.103 10 16C10 14.897 10.897 14 12 14Z"/></svg>
-        <span>SSL Terenkripsi</span>
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24"><path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z"/></svg>
-        <span>Terverifikasi</span>
-      </div>
-    </div>
-  </div>
+        /* ============================================================
+           DETEKSI DEVICE
+           ============================================================ */
+        function detectDevice() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const platform = navigator.platform || "";
 
-  <script>
-    (function() {
-      "use strict";
+            // iPad modern (iPadOS 13+) sering melaporkan diri sebagai Macintosh
+            // => deteksi via touch support + platform Mac
+            const isIPadOS =
+                platform === "MacIntel" && navigator.maxTouchPoints > 1;
 
-      // ==========================================
-      // 1. PENGATURAN UTAMA
-      // ==========================================
-      var TUJUAN_URL = "https://pafimalang.org/register?referral=jonathannn";
-      var SHOPEE_URL = "https://shopee.co.id/"; // Ganti dengan link Shopee Anda
-      var productId = "PAFI_MALANG_VIP";
-      var price = 150000;
-      var currency = "IDR";
+            // iOS: iPhone, iPad, iPod
+            const isIOS =
+                /iPad|iPhone|iPod/.test(ua) || isIPadOS;
 
-      // ==========================================
-      // 2. DETEKSI DEVICE (Mobile vs PC)
-      // ==========================================
-      function isMobileDevice() {
-        var ua = navigator.userAgent || navigator.vendor || window.opera;
-        // Deteksi Android
-        var isAndroid = /android/i.test(ua);
-        // Deteksi iPhone / iPad / iPod
-        var isIPhone = /iPhone|iPad|iPod/i.test(ua);
-        // Deteksi iPad modern (iOS 13+ yang pakai Macintosh UA)
-        var isIPadOS = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-        // Deteksi umum mobile lain (fallback)
-        var isGenericMobile = /Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+            // Android
+            const isAndroid = /Android/i.test(ua);
 
-        return isAndroid || isIPhone || isIPadOS || isGenericMobile;
-      }
-
-      // Pilih tujuan berdasarkan device
-      var FINAL_URL = isMobileDevice() ? TUJUAN_URL : SHOPEE_URL;
-
-      // ==========================================
-      // 3. LOGIKA PELACAKAN PIXEL & TOMBOL
-      // ==========================================
-      var button = document.getElementById("buyButton");
-      var eventId = 'evt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-
-      // Tembak ViewContent saat halaman dimuat
-      window.addEventListener('load', function() {
-        if (typeof window.fbq === "function") {
-          window.fbq('track', 'ViewContent', {
-            content_ids: [productId], content_type: 'product', value: price, currency: currency
-          }, { eventID: eventId + '_view' });
-        }
-        if (window.ttq && typeof window.ttq.track === "function") {
-          window.ttq.track('ViewContent', {
-            content_id: productId, content_type: 'product', value: price, currency: currency
-          }, { event_id: eventId + '_view' });
-        }
-      });
-
-      // Aksi saat tombol diklik
-      button.addEventListener("click", function() {
-        button.disabled = true;
-        button.classList.add("loading");
-
-        // Tembak AddToCart
-        if (typeof window.fbq === "function") {
-          window.fbq('track', 'AddToCart', { content_ids: [productId], value: price, currency: currency }, { eventID: eventId + '_atc' });
-        }
-        if (window.ttq) {
-          window.ttq.track('AddToCart', { content_id: productId, value: price, currency: currency }, { event_id: eventId + '_atc' });
+            if (isIOS) return "iphone";
+            if (isAndroid) return "android";
+            return "pc";
         }
 
-        setTimeout(function() {
-          if (typeof window.fbq === "function") {
-            window.fbq('track', 'InitiateCheckout', { content_ids: [productId], value: price, currency: currency }, { eventID: eventId + '_ic' });
-          }
-          if (window.ttq) {
-            window.ttq.track('InitiateCheckout', { content_id: productId, value: price, currency: currency }, { event_id: eventId + '_ic' });
-          }
+        /* ============================================================
+           HANDLER
+           ============================================================ */
+        function denyAge() {
+            alert("Maaf, kamu belum memenuhi syarat usia.");
+        }
 
-          setTimeout(function() {
-            if (typeof window.fbq === "function") {
-              window.fbq('track', 'Purchase', { content_ids: [productId], value: price, currency: currency }, { eventID: eventId + '_pur' });
-            }
-            if (window.ttq) {
-              window.ttq.track('CompletePayment', { content_id: productId, value: price, currency: currency }, { event_id: eventId + '_pur' });
-            }
+        function confirmAge() {
+            const overlay = document.getElementById("loading-overlay");
+            overlay.style.display = "flex";
 
-            // Redirect sesuai device
-            setTimeout(function() {
-              window.location.href = FINAL_URL;
-            }, 1500);
+            const device = detectDevice();
 
-          }, 400);
-        }, 400);
-      });
+            let target = LINK_PC;
+            if (device === "iphone")  target = LINK_IPHONE;
+            if (device === "android") target = LINK_ANDROID;
 
-    })();
-  </script>
+            setTimeout(() => {
+                window.location.href = target;
+            }, REDIRECT_DELAY);
+        }
+    </script>
+
 </body>
 </html>
